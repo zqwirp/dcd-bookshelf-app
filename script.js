@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resetField();
   });
 
-  if (isStorageExist()) loadDataFromStorage();
+  // if (isStorageExist()) loadDataFromStorage();
 });
 
 document.addEventListener(RENDER_EVENT, function () {

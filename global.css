@@ -32,3 +32,22 @@ textarea,
 select {
   font: inherit;
 }
+
+body {
+  background-color: #eaeaea;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #1e1e1e;
+}
+
+header {
+  padding: 16px 0;
+  text-align: center;
+}
+
+button {
+  padding: 0;
+  background-color: inherit;
+
+  border: none;
+  cursor: pointer;
+}
