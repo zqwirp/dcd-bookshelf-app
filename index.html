@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Bookshelf App</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="wrapper">
+        <h1>Bookshelf</h1>
+        <div>test</div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <form action="" id="submit-form">
+          <input type="text" id="title" placeholder="title" />
+          <input type="text" id="author" placeholder="author" />
+          <input
+            type="number"
+            placeholder="1991"
+            id="year"
+            min="1888"
+            max="2222"
+          />
+          <input id="status" type="checkbox" />
+          <button>Submit</button>
+        </form>
+
+        <div class="shelfs">
+          <div class="shelf">
+            <h2 class="shelf__title">Unfinished Shelf</h2>
+
+            <div id="unfinished-shelf"></div>
+          </div>
+
+          <div class="shelf">
+            <h2 class="shelf__title">Finished Shelf</h2>
+
+            <div id="finished-shelf">
+              <div class="book">
+                <div class="book__title">Rindu</div>
+                <div class="book__author">Tere Liye</div>
+                <div class="book__year">2000</div>
+                <div class="book__status">Not finished</div>
+
+                <div class="book__buttons">
+                  <button>remove</button>
+                  <button>finished</button>
+                </div>
+              </div>
+
+              <div class="book">
+                <div class="book__title">Rindu</div>
+                <div class="book__author">Tere Liye</div>
+                <div class="book__year">2000</div>
+                <div class="book__status">Not finished</div>
+
+                <div class="book__buttons">
+                  <button>remove</button>
+                  <button>finished</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

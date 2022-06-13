@@ -1,0 +1,42 @@
+body {
+  background-color: #cecece;
+}
+
+input {
+  display: block;
+}
+
+header {
+  background-color: #bababa;
+}
+
+header .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 800px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+main .container {
+  max-width: 800px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+form,
+.shelf {
+  max-width: 600px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.shelf__title {
+  text-align: center;
+}
+
+.book {
+  margin-bottom: 20px;
+}
