@@ -19,24 +19,49 @@
     <main>
       <div class="container">
         <div class="section">
-          <div class="section__title"><h2>SUBMIT</h2></div>
+          <h2 class="section__title">SUBMIT</h2>
           <form id="submit-form" action="" class="form">
-            <input type="text" id="title" placeholder="title" required />
-            <input type="text" id="author" placeholder="author" />
-            <input
-              type="number"
-              placeholder="1991"
-              id="year"
-              min="1888"
-              max="2222"
-            />
-            <input id="status" type="checkbox" />
-            <button>SUBMIT</button>
+            <div class="field-group">
+              <label for="title">Title</label>
+              <input
+                type="text"
+                id="title"
+                placeholder="ex. Rindu"
+                minlength="3"
+                required
+              />
+            </div>
+            <div class="field-group">
+              <label for="author">Author</label>
+              <input
+                type="text"
+                id="author"
+                placeholder="ex. Tere Liye"
+                minlength="3"
+              />
+            </div>
+            <div class="field-group">
+              <label for="year">Year</label>
+              <input
+                type="number"
+                placeholder="ex. 2014"
+                id="year"
+                min="1888"
+                max="2222"
+                required
+              />
+            </div>
+            <div class="checkbox">
+              <label for="status">Completed</label>
+              &nbsp;
+              <input id="status" type="checkbox" />
+            </div>
+            <button class="form__button">SUBMIT</button>
           </form>
         </div>
 
         <div class="section">
-          <div class="section__title"><h2>UNFINISHED</h2></div>
+          <h2 class="section__title">UNFINISHED</h2>
 
           <div id="unfinished-shelf">
             <div class="book">
@@ -68,9 +93,7 @@
         </div>
 
         <div class="section">
-          <div class="section__title">
-            <h2>FINISHED</h2>
-          </div>
+          <h2 class="section__title">FINISHED</h2>
 
           <div id="finished-shelf">
             <div class="book">

@@ -42,6 +42,7 @@ body {
 header {
   padding: 16px 0;
   text-align: center;
+  letter-spacing: 1.4px;
 }
 
 button {
@@ -49,5 +50,9 @@ button {
   background-color: inherit;
 
   border: none;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
   cursor: pointer;
 }
