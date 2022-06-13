@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     handleSubmitBook();
   });
 
-  // if (isStorageExist()) {
-  //   loadDataFromStorage();
-  // }
+  if (isStorageExist()) {
+    loadDataFromStorage();
+  }
 });
 
 document.addEventListener(RENDER_EVENT, function () {
@@ -54,7 +54,7 @@ function handleSubmitBook() {
   books.push(book);
 
   document.dispatchEvent(new Event(RENDER_EVENT));
-  // saveData();
+  saveData();
 }
 
 function makeBookElement(book) {
@@ -123,7 +123,7 @@ function moveBookToFinished(bookId) {
 
   book.status = true;
   document.dispatchEvent(new Event(RENDER_EVENT));
-  // saveData();
+  saveData();
 }
 
 function moveBookToUnfinished(bookId) {
@@ -133,7 +133,7 @@ function moveBookToUnfinished(bookId) {
 
   book.status = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
-  // saveData();
+  saveData();
 }
 
 function removeBook(bookId) {
@@ -143,7 +143,7 @@ function removeBook(bookId) {
 
   books.splice(book, 1);
   document.dispatchEvent(new Event(RENDER_EVENT));
-  // saveData();
+  saveData();
 }
 
 function findBook(bookId) {
@@ -163,4 +163,33 @@ function findBookIndex(bookId) {
   }
 
   return -1;
+}
+
+function isStorageExist() /* boolean */ {
+  if (typeof Storage === undefined) {
+    alert("Your browser doesn't support local storage.");
+    return false;
+  }
+  return true;
+}
+
+function saveData() {
+  if (isStorageExist()) {
+    const parsed = JSON.stringify(books);
+    localStorage.setItem(STORAGE_KEY, parsed);
+    document.dispatchEvent(new Event(SAVED_EVENT));
+  }
+}
+
+function loadDataFromStorage() {
+  const serializedData = localStorage.getItem(STORAGE_KEY);
+  let data = JSON.parse(serializedData);
+
+  if (data !== null) {
+    for (const book of data) {
+      books.push(book);
+    }
+  }
+
+  document.dispatchEvent(new Event(RENDER_EVENT));
 }
