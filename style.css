@@ -45,6 +45,7 @@
 
 .checkbox label {
   font-size: 14px;
+  letter-spacing: 0.8px;
   cursor: pointer;
 }
 
@@ -63,6 +64,9 @@
   font-weight: bold;
   letter-spacing: 1.2px;
   color: #fff;
+}
+.form__button:hover {
+  background-color: #555;
 }
 
 .book:not(:last-child) {
