@@ -9,10 +9,15 @@
   flex-direction: column;
 }
 
-.section__title {
-  text-align: center;
+.section:not(:last-child) {
+  margin-bottom: 30px;
 }
 
-.book {
+.section__title {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.book:not(:last-child) {
   margin-bottom: 20px;
 }
