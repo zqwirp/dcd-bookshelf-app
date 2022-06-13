@@ -1,5 +1,5 @@
 .container {
-  max-width: 600px;
+  max-width: 800px;
   padding: 16px 5vw;
   margin: 0 auto;
 }
@@ -71,4 +71,13 @@
 
 .book:not(:last-child) {
   margin-bottom: 20px;
+}
+
+.book {
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
