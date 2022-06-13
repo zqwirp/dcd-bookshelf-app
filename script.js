@@ -8,11 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
   submitForm.addEventListener("submit", event => {
     event.preventDefault();
     handleSubmitBook();
+    resetField();
   });
 
-  if (isStorageExist()) {
-    loadDataFromStorage();
-  }
+  if (isStorageExist()) loadDataFromStorage();
 });
 
 document.addEventListener(RENDER_EVENT, function () {
@@ -31,6 +30,9 @@ document.addEventListener(RENDER_EVENT, function () {
       finishedBookShelf.append(element);
     }
   }
+
+  console.clear();
+  console.table(books);
 });
 
 function handleSubmitBook() {
@@ -192,4 +194,10 @@ function loadDataFromStorage() {
   }
 
   document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function resetField() {
+  document.getElementById("title").value = "";
+  document.getElementById("author").value = "";
+  document.getElementById("year").valua = "";
 }
