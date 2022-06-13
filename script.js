@@ -1,5 +1,7 @@
 const books = [];
 const RENDER_EVENT = "render-book";
+const SAVED_EVENT = "saved-todo";
+const STORAGE_KEY = "BOOKS";
 
 document.addEventListener("DOMContentLoaded", () => {
   const submitForm = document.getElementById("submit-form");
@@ -29,27 +31,17 @@ document.addEventListener(RENDER_EVENT, function () {
       finishedBookShelf.append(element);
     }
   }
-  // const uncompletedTODOList = document.getElementById("todos");
-  // uncompletedTODOList.innerHTML = "";
-
-  // const completedTODOList = document.getElementById("completed-todos");
-  // completedTODOList.innerHTML = "";
-
-  // for (const todoItem of todos) {
-  //   const todoElement = makeTodo(todoItem);
-  //   if (!todoItem.isCompleted) uncompletedTODOList.append(todoElement);
-  //   else completedTODOList.append(todoElement);
-  // }
 });
 
 function handleSubmitBook() {
   const title = document.getElementById("title").value;
-  const author = document.getElementById("author").value;
-  const year = document.getElementById("year").value;
+  const author = document.getElementById("author").value || "-";
+  const year = document.getElementById("year").value || "-";
   const status = document.getElementById("status").checked;
   const id = (function () {
-    const now = +new Date();
-    return now.toString();
+    const time = +new Date();
+    const n = time.toString();
+    return n.slice(n.length - 7);
   })();
 
   const book = {
@@ -94,7 +86,7 @@ function makeBookElement(book) {
 
     checkButton.addEventListener("click", function () {
       console.log("check button");
-      // addTaskToCompleted(todoObject.id);
+      moveBookToFinished(book.id);
     });
 
     container.append(checkButton);
@@ -105,7 +97,7 @@ function makeBookElement(book) {
 
     undoButton.addEventListener("click", function () {
       console.log("undo-button");
-      // undoTaskFromCompleted(todoObject.id);
+      moveBookToUnfinished(book.id);
     });
     container.append(undoButton);
   }
@@ -116,10 +108,59 @@ function makeBookElement(book) {
 
   trashButton.addEventListener("click", function () {
     console.log("remove-button");
-    // removeTaskFromCompleted(todoObject.id);
+    removeBook(book.id);
   });
 
   container.append(trashButton);
 
   return container;
+}
+
+function moveBookToFinished(bookId) {
+  const book = findBook(bookId);
+
+  if (book == null) return;
+
+  book.status = true;
+  document.dispatchEvent(new Event(RENDER_EVENT));
+  // saveData();
+}
+
+function moveBookToUnfinished(bookId) {
+  const book = findBook(bookId);
+
+  if (book == null) return;
+
+  book.status = false;
+  document.dispatchEvent(new Event(RENDER_EVENT));
+  // saveData();
+}
+
+function removeBook(bookId) {
+  const book = findBookIndex(bookId);
+
+  if (book === -1) return;
+
+  books.splice(book, 1);
+  document.dispatchEvent(new Event(RENDER_EVENT));
+  // saveData();
+}
+
+function findBook(bookId) {
+  for (const book of books) {
+    if (book.id === bookId) {
+      return book;
+    }
+  }
+  return null;
+}
+
+function findBookIndex(bookId) {
+  for (const index in books) {
+    if (books[index].id === bookId) {
+      return index;
+    }
+  }
+
+  return -1;
 }
