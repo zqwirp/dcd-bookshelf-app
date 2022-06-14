@@ -87,3 +87,14 @@
 .book .buttons button {
   margin: 0 10px;
 }
+
+.book__trash-btn {
+  width: 30px;
+  height: 30px;
+
+  background-image: url("trash.svg");
+  background-size: contain;
+}
+.book__trash-btn:hover {
+  background-image: url("trash-fill.svg");
+}
