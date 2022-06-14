@@ -84,5 +84,6 @@
   border: 1px solid #ffffff22;
 }
 
-.book .info {
+.book .buttons button {
+  margin: 0 10px;
 }
