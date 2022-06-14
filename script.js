@@ -4,6 +4,8 @@ const SAVED_EVENT = "saved-todo";
 const STORAGE_KEY = "BOOKS";
 
 document.addEventListener("DOMContentLoaded", () => {
+  resetField();
+
   const submitForm = document.getElementById("submit-form");
   submitForm.addEventListener("submit", event => {
     event.preventDefault();
@@ -72,48 +74,45 @@ function makeBookElement(book) {
   textYear.classList.add("book__year");
   textYear.innerText = book.year;
 
-  const textStatus = document.createElement("div");
-  textStatus.classList.add("book__status");
-  textStatus.innerText = book.status ? "Finished" : "Unfinished";
+  const infoWrapper = document.createElement("div");
+  infoWrapper.classList.add("info");
+  infoWrapper.append(textTitle, textAuthor, textYear);
 
-  const container = document.createElement("div");
-  container.classList.add("book");
-  container.append(textTitle, textAuthor, textYear, textStatus);
-  container.setAttribute("id", `book-id-${book.id}`);
+  const buttonsWrapper = document.createElement("div");
+  buttonsWrapper.classList.add("buttons");
 
   if (book.status === false) {
     const checkButton = document.createElement("button");
-    checkButton.innerText = "check";
-    // checkButton.classList.add("check-button");
+    checkButton.classList.add("book__button", "check");
 
     checkButton.addEventListener("click", function () {
-      console.log("check button");
       moveBookToFinished(book.id);
     });
 
-    container.append(checkButton);
+    buttonsWrapper.append(checkButton);
   } else {
     const undoButton = document.createElement("button");
-    undoButton.innerText = "undo";
-    // undoButton.classList.add("undo-button");
+    undoButton.classList.add("book__button", "check");
 
     undoButton.addEventListener("click", function () {
-      console.log("undo-button");
       moveBookToUnfinished(book.id);
     });
-    container.append(undoButton);
+    buttonsWrapper.append(undoButton);
   }
 
   const trashButton = document.createElement("button");
-  trashButton.innerText = "remove";
-  // trashButton.classList.add("trash-button");
+  trashButton.classList.add("book__button", "trash");
 
   trashButton.addEventListener("click", function () {
-    console.log("remove-button");
     removeBook(book.id);
   });
 
-  container.append(trashButton);
+  buttonsWrapper.append(trashButton);
+
+  const container = document.createElement("div");
+  container.classList.add("book");
+  container.append(infoWrapper, buttonsWrapper);
+  container.setAttribute("id", `book-id-${book.id}`);
 
   return container;
 }
@@ -199,5 +198,6 @@ function loadDataFromStorage() {
 function resetField() {
   document.getElementById("title").value = "";
   document.getElementById("author").value = "";
-  document.getElementById("year").valua = "";
+  document.getElementById("year").value = "";
+  document.getElementById("status").checked = false;
 }
