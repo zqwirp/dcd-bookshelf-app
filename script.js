@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resetField();
   });
 
-  // if (isStorageExist()) loadDataFromStorage();
+  if (isStorageExist()) loadDataFromStorage();
 });
 
 document.addEventListener(RENDER_EVENT, function () {
@@ -62,21 +62,25 @@ function handleSubmitBook() {
 }
 
 function makeBookElement(book) {
-  const textTitle = document.createElement("div");
-  textTitle.classList.add("book__title");
-  textTitle.innerText = book.title;
+  const generateRow = (desc, prop) => {
+    const descText = document.createElement("td");
+    descText.innerText = desc;
+    const colon = document.createElement("td");
+    colon.innerText = "\xa0:\xa0";
+    const text = document.createElement("td");
+    text.innerText = prop;
+    const row = document.createElement("tr");
+    row.append(descText, colon, text);
+    return row;
+  };
 
-  const textAuthor = document.createElement("div");
-  textAuthor.classList.add("book__author");
-  textAuthor.innerText = book.author;
+  const title = generateRow("Title", book.title);
+  const author = generateRow("Author", book.author);
+  const year = generateRow("Year", book.year);
 
-  const textYear = document.createElement("div");
-  textYear.classList.add("book__year");
-  textYear.innerText = book.year;
-
-  const infoWrapper = document.createElement("div");
+  const infoWrapper = document.createElement("table");
   infoWrapper.classList.add("info");
-  infoWrapper.append(textTitle, textAuthor, textYear);
+  infoWrapper.append(title, author, year);
 
   const buttonsWrapper = document.createElement("div");
   buttonsWrapper.classList.add("buttons");
