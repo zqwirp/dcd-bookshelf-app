@@ -97,6 +97,16 @@
 .book__button.check:hover {
   background-image: url("check-o-fill.svg");
 }
+.book__button.undo {
+  background-image: url("undo.svg");
+  background-size: contain;
+
+  transition: transform 1s;
+}
+.book__button.undo:hover {
+  transform: rotate(-30deg);
+  background-image: url(undo-lit.svg);
+}
 .book__button.trash {
   background-image: url("trash.svg");
   background-size: contain;
