@@ -84,17 +84,23 @@
   border: 1px solid #ffffff22;
 }
 
-.book .buttons button {
-  margin: 0 10px;
-}
-
-.book__trash-btn {
+.book__button {
   width: 30px;
   height: 30px;
 
+  margin: 0 20px;
+}
+.book__button.check {
+  background-image: url("check-o.svg");
+  background-size: contain;
+}
+.book__button.check:hover {
+  background-image: url("check-o-fill.svg");
+}
+.book__button.trash {
   background-image: url("trash.svg");
   background-size: contain;
 }
-.book__trash-btn:hover {
+.book__button.trash:hover {
   background-image: url("trash-fill.svg");
 }
