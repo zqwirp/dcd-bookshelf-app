@@ -39,8 +39,8 @@ document.addEventListener(RENDER_EVENT, function () {
 
 function handleSubmitBook() {
   const title = document.getElementById("title").value;
-  const author = document.getElementById("author").value || "-";
-  const year = document.getElementById("year").value || "-";
+  const author = document.getElementById("author").valu;
+  const year = document.getElementById("year").value;
   const status = document.getElementById("status").checked;
   const id = (function () {
     const time = +new Date();
@@ -96,7 +96,7 @@ function makeBookElement(book) {
     buttonsWrapper.append(checkButton);
   } else {
     const undoButton = document.createElement("button");
-    undoButton.classList.add("book__button", "check");
+    undoButton.classList.add("book__button", "undo");
 
     undoButton.addEventListener("click", function () {
       moveBookToUnfinished(book.id);
