@@ -9,12 +9,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitForm = document.getElementById("submit-form");
   submitForm.addEventListener("submit", event => {
     event.preventDefault();
-    handleSubmitBook();
+    submitBook();
     resetField();
   });
 
   if (isStorageExist()) loadDataFromStorage();
+
+  const searchForm = document.getElementById("search-form");
+  searchForm.addEventListener("submit", () => {
+    event.preventDefault();
+    console.log("hi mom");
+  });
 });
+
+function searchBook(title) {
+  return title;
+}
 
 document.addEventListener(RENDER_EVENT, function () {
   const unfinishedBookShelf = document.getElementById("unfinished-shelf");
@@ -37,7 +47,7 @@ document.addEventListener(RENDER_EVENT, function () {
   console.table(books);
 });
 
-function handleSubmitBook() {
+function submitBook() {
   const title = document.getElementById("title").value;
   const author = document.getElementById("author").valu;
   const year = document.getElementById("year").value;
