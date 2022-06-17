@@ -1,5 +1,7 @@
-const books = [];
+let books = [];
+let searchedBooks = [];
 const RENDER_EVENT = "render-book";
+const RENDER_SEARCH_EVENT = "render-search-book";
 const SAVED_EVENT = "saved-todo";
 const STORAGE_KEY = "BOOKS";
 
@@ -18,15 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchForm = document.getElementById("search-form");
   searchForm.addEventListener("submit", () => {
     event.preventDefault();
-    console.log("hi mom");
+    searchBook();
+    searchedBooks = [];
   });
 });
 
-function searchBook(title) {
-  return title;
-}
-
 document.addEventListener(RENDER_EVENT, function () {
+  console.table(books);
   const unfinishedBookShelf = document.getElementById("unfinished-shelf");
   unfinishedBookShelf.innerHTML = "";
 
@@ -42,14 +42,11 @@ document.addEventListener(RENDER_EVENT, function () {
       finishedBookShelf.append(element);
     }
   }
-
-  console.clear();
-  console.table(books);
 });
 
 function submitBook() {
   const title = document.getElementById("title").value;
-  const author = document.getElementById("author").valu;
+  const author = document.getElementById("author").value;
   const year = document.getElementById("year").value;
   const status = document.getElementById("status").checked;
   const id = (function () {
@@ -69,6 +66,33 @@ function submitBook() {
 
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
+}
+
+document.addEventListener(RENDER_SEARCH_EVENT, function () {
+  const unfinishedBookShelf = document.getElementById("unfinished-shelf");
+  unfinishedBookShelf.innerHTML = "";
+
+  const finishedBookShelf = document.getElementById("finished-shelf");
+  finishedBookShelf.innerHTML = "";
+
+  for (const book of searchedBooks) {
+    const element = makeBookElement(book);
+
+    if (book.status === false) {
+      unfinishedBookShelf.append(element);
+    } else {
+      finishedBookShelf.append(element);
+    }
+  }
+});
+
+function searchBook() {
+  const searchValue = document.getElementById("search").value;
+  const filter = books.filter(book => {
+    return book.title.toLowerCase().includes(searchValue.toLowerCase());
+  });
+  searchedBooks = filter;
+  document.dispatchEvent(new Event(RENDER_SEARCH_EVENT));
 }
 
 function makeBookElement(book) {
