@@ -1,5 +1,7 @@
-const books = [];
+let books = [];
+let searchedBooks = [];
 const RENDER_EVENT = "render-book";
+const RENDER_SEARCH_EVENT = "render-search-book";
 const SAVED_EVENT = "saved-todo";
 const STORAGE_KEY = "BOOKS";
 
@@ -9,14 +11,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitForm = document.getElementById("submit-form");
   submitForm.addEventListener("submit", event => {
     event.preventDefault();
-    handleSubmitBook();
+    submitBook();
     resetField();
   });
 
   if (isStorageExist()) loadDataFromStorage();
+
+  const searchForm = document.getElementById("search-form");
+  searchForm.addEventListener("submit", () => {
+    event.preventDefault();
+    searchBook();
+    searchedBooks = [];
+  });
 });
 
 document.addEventListener(RENDER_EVENT, function () {
+  console.table(books);
   const unfinishedBookShelf = document.getElementById("unfinished-shelf");
   unfinishedBookShelf.innerHTML = "";
 
@@ -32,14 +42,11 @@ document.addEventListener(RENDER_EVENT, function () {
       finishedBookShelf.append(element);
     }
   }
-
-  console.clear();
-  console.table(books);
 });
 
-function handleSubmitBook() {
+function submitBook() {
   const title = document.getElementById("title").value;
-  const author = document.getElementById("author").valu;
+  const author = document.getElementById("author").value;
   const year = document.getElementById("year").value;
   const status = document.getElementById("status").checked;
   const id = (function () {
@@ -59,6 +66,33 @@ function handleSubmitBook() {
 
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
+}
+
+document.addEventListener(RENDER_SEARCH_EVENT, function () {
+  const unfinishedBookShelf = document.getElementById("unfinished-shelf");
+  unfinishedBookShelf.innerHTML = "";
+
+  const finishedBookShelf = document.getElementById("finished-shelf");
+  finishedBookShelf.innerHTML = "";
+
+  for (const book of searchedBooks) {
+    const element = makeBookElement(book);
+
+    if (book.status === false) {
+      unfinishedBookShelf.append(element);
+    } else {
+      finishedBookShelf.append(element);
+    }
+  }
+});
+
+function searchBook() {
+  const searchValue = document.getElementById("search").value;
+  const filter = books.filter(book => {
+    return book.title.toLowerCase().includes(searchValue.toLowerCase());
+  });
+  searchedBooks = filter;
+  document.dispatchEvent(new Event(RENDER_SEARCH_EVENT));
 }
 
 function makeBookElement(book) {
@@ -108,7 +142,8 @@ function makeBookElement(book) {
   trashButton.classList.add("book__button", "trash");
 
   trashButton.addEventListener("click", function () {
-    removeBook(book.id);
+    // removeBook(book.id);
+    toggleCustomDialog(book);
   });
 
   buttonsWrapper.append(trashButton);
@@ -119,6 +154,50 @@ function makeBookElement(book) {
   container.setAttribute("id", `book-id-${book.id}`);
 
   return container;
+}
+function toggleCustomDialog(book) {
+  const generateRow = (desc, prop) => {
+    const descText = document.createElement("td");
+    descText.innerText = desc;
+    const colon = document.createElement("td");
+    colon.innerText = "\xa0:\xa0";
+    const text = document.createElement("td");
+    text.innerText = prop;
+    const row = document.createElement("tr");
+    row.append(descText, colon, text);
+    return row;
+  };
+
+  const title = generateRow("Title", book.title);
+  const author = generateRow("Author", book.author);
+  const year = generateRow("Year", book.year);
+
+  const tableContainer = document.createElement("table");
+  tableContainer.append(title, author, year);
+
+  const container = document.getElementById("remove-book-container");
+  container.style.display = "flex";
+
+  const textData = document.getElementById("d-book");
+  textData.append(tableContainer);
+
+  const yesButton = document.getElementById("d-book-yes");
+  yesButton.addEventListener("click", handleYes);
+  const noButton = document.getElementById("d-book-no");
+  noButton.addEventListener("click", handleNo);
+
+  function handleYes(event) {
+    removeBook(book.id);
+    container.style.display = "none";
+    tableContainer.remove();
+    event.target.removeEventListener("click", handleYes);
+  }
+
+  function handleNo(event) {
+    container.style.display = "none";
+    tableContainer.remove();
+    event.target.removeEventListener("click", handleNo);
+  }
 }
 
 function moveBookToFinished(bookId) {
