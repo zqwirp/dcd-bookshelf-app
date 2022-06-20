@@ -142,7 +142,8 @@ function makeBookElement(book) {
   trashButton.classList.add("book__button", "trash");
 
   trashButton.addEventListener("click", function () {
-    removeBook(book.id);
+    // removeBook(book.id);
+    toggleCustomDialog(book);
   });
 
   buttonsWrapper.append(trashButton);
@@ -153,6 +154,50 @@ function makeBookElement(book) {
   container.setAttribute("id", `book-id-${book.id}`);
 
   return container;
+}
+function toggleCustomDialog(book) {
+  const generateRow = (desc, prop) => {
+    const descText = document.createElement("td");
+    descText.innerText = desc;
+    const colon = document.createElement("td");
+    colon.innerText = "\xa0:\xa0";
+    const text = document.createElement("td");
+    text.innerText = prop;
+    const row = document.createElement("tr");
+    row.append(descText, colon, text);
+    return row;
+  };
+
+  const title = generateRow("Title", book.title);
+  const author = generateRow("Author", book.author);
+  const year = generateRow("Year", book.year);
+
+  const tableContainer = document.createElement("table");
+  tableContainer.append(title, author, year);
+
+  const container = document.getElementById("remove-book-container");
+  container.style.display = "flex";
+
+  const textData = document.getElementById("d-book");
+  textData.append(tableContainer);
+
+  const yesButton = document.getElementById("d-book-yes");
+  yesButton.addEventListener("click", handleYes);
+  const noButton = document.getElementById("d-book-no");
+  noButton.addEventListener("click", handleNo);
+
+  function handleYes(event) {
+    removeBook(book.id);
+    container.style.display = "none";
+    tableContainer.remove();
+    event.target.removeEventListener("click", handleYes);
+  }
+
+  function handleNo(event) {
+    container.style.display = "none";
+    tableContainer.remove();
+    event.target.removeEventListener("click", handleNo);
+  }
 }
 
 function moveBookToFinished(bookId) {

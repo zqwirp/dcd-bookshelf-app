@@ -119,3 +119,39 @@
 .book__button.trash:hover {
   background-image: url("trash-fill.svg");
 }
+
+.delete-container {
+  position: fixed;
+  inset: 0;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #aaaaaaaa;
+}
+
+.d-card {
+  width: max-content;
+  padding: 1em 1.5em 0.5em;
+
+  background-color: #fafafa;
+  box-shadow: 0 0 5px 2px #999;
+
+  border-radius: 10px;
+}
+
+.d-card button {
+  display: block;
+
+  width: 80%;
+  padding: 0.5em 0;
+  margin: 1em auto;
+
+  background-color: #999;
+
+  border-radius: 8px;
+}
+
+body {
+}
